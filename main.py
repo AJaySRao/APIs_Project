@@ -20,6 +20,22 @@ def iss_in_local_position():
         return True
 
 
+def mid_night():
+    parameters = {
+        "lat": LAT,
+        "lng": LNG,
+        "formatted": 0
+    }
+
+    res = requests.get(url="https://api.sunrise-sunset.org/json", params=parameters,)
+    res.raise_for_status()
+    data = res.json()
+    sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
+    sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+    current_time = datetime.now(timezone.utc).hour
+    if current_time >= sunset or current_time <= sunrise:
+        return True
+
 
 
 
