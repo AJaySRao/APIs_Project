@@ -36,6 +36,14 @@ def mid_night():
     if current_time >= sunset or current_time <= sunrise:
         return True
 
-
-
-
+while True:
+    time.sleep(1800)  # 30 mins
+    if iss_in_local_position() and mid_night():
+        with smtplib.SMTP("smtp.gmail.com") as connection:
+            connection.starttls()
+            connection.login(user=EMAIL, password=PASS)
+            connection.sendmail(
+                from_addr=EMAIL,
+                to_addrs=EMAIL,
+                msg="Subject: Look up \n\nISS is right above you look for it!! "
+            )
